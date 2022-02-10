@@ -100,7 +100,7 @@ app.post('/api/event/buy', (request, response) => {
         ticketNr: ''
     
     }
-  
+
 
         //order.id = data.id; // Kopplar samman beställningen med användarnamnet från JWT som skickades med i anropet
         

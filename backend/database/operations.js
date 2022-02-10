@@ -3,38 +3,51 @@ const database = new nedb ({filename: 'accounts.db', autoload:true })
 
 
 //lägg in det som ska visas på fronten
-const event=
-[
+const event={
+  "type":"events",
+  "shows":[
+
+
       {
         "id":1,
-        "title":"untz",
+        "title":"Lasse-Stefanz",
         "location":"Kjell Härnqvistsalen",
         "time":"19:00-21:00",
-        "date":"1 April",
+        "date":"21 Mars",
         "price":350,
         "ticket":[]         
       },
       {
         "id":2,
-        "title":"Lasse-stefanz",
+        "title":"Pelle trubadur",
         "location":"Pubelipuben",
         "time":"22:00-00:00",
-        "date":"1 April",
+        "date":"29 Mars",
         "price":110,
         "ticket":[]
                   
       },
       {
         "id":3,
-        "title":"Pelle trubadur",
+        "title":"Kajsas kör",
         "location":"Götaplatsen",
-        "time":"20:00",
+        "time":"15:00-16:00",
         "date":"10 April",
         "price":99,
         "ticket":[]
+      },
+
+        {
+        "id":4,
+        "title":"Klubb Untz",
+        "location":"Din favoritkällare",
+        "time":"22:00-du tröttnar",
+        "date":"17 April",
+        "price":150,
+        "ticket":[]
        
       }           
-    ]
+    ]   }
 
    
     const {hashPassword} = require('../utils/bcrypt'); 
@@ -69,10 +82,11 @@ const event=
   //saveEvent();
 
   async function getEvent() {
+
  
    
-    const event= await database.find({  });
-    return event;
+    const event= await database.find({ type:'events' });
+    return event[0].shows;
      
   
     //console.log(menu);
@@ -83,6 +97,7 @@ const event=
 
   function saveTicket(ticket){
     database.update ({ type:'event-ticket' },{$push: { tickets: ticket } ,}, {});
+   
   }
 
  

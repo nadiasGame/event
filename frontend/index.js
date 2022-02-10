@@ -10,8 +10,8 @@ const etaElem = document.querySelector('#eta');
 const passwordElem = document.querySelector('#password');
 const createButton = document.querySelector('#create-button');
  */
-const loginUsername = document.querySelector('#username-login');
-const loginPassword = document.querySelector('#password-login');
+const usernameLogin = document.querySelector('#username-login');
+const passwordLogin = document.querySelector('#password-login');
 const loginButton = document.querySelector('#login-button');
 
 async function ticket(ticket) {
@@ -35,17 +35,25 @@ async function ticket(ticket) {
     if (data.success) {
         // Visar ordernummer och leveranstid (ETA);
         ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
+       
         /* etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`; */
     }
- 
+    
 }
 
 function showEvent (event){
+    console.log(event);
     event.forEach ((eventItem)=>{
         const itemElem = document.createElement('li');
         itemElem.classList.add('event-item');//sätter en css class
-        itemElem.innerHTML= `<span>${eventItem.title}</span>${eventItem.price} kr</span>
-         ${eventItem.date} </span`;
+        itemElem.innerHTML= 
+        `   
+            <span class"'${eventItem.id}'">${eventItem.title}</span>
+            <div>${eventItem.title}</div>
+            <span>${eventItem.time}</span>
+            <span>${eventItem.price} kr</span>
+            <span>${eventItem.date} </span>
+        `;
         eventElem.append(itemElem);
 
         itemElem.addEventListener('click',()=>{
@@ -127,8 +135,8 @@ async function login(credentials) {
 }); */
 loginButton.addEventListener('click', () => {
     const credentials = {
-        username: loginUsername.value,
-        password: loginPassword.value
+        username: usernameLogin.value,
+        password: passwordLogin.value
     }
 
     login(credentials);
