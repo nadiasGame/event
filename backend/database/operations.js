@@ -1,11 +1,10 @@
-const nedb = require('nedb-promise');//startar upp en ny databas
+  const nedb = require('nedb-promise');//startar upp en ny databas
 const database = new nedb ({filename: 'accounts.db', autoload:true })
 
 
 //lägg in det som ska visas på fronten
-const event={
-  "type":"events",
-  "shows":[
+const event=
+  [
 
 
       {
@@ -47,7 +46,7 @@ const event={
         "ticket":[]
        
       }           
-    ]   }
+    ]   
 
    
     const {hashPassword} = require('../utils/bcrypt'); 
@@ -85,8 +84,8 @@ const event={
 
  
    
-    const event= await database.find({ type:'events' });
-    return event[0].shows;
+    const event= await database.find({ });
+    return event;
      
   
     //console.log(menu);
@@ -95,8 +94,19 @@ const event={
     database.insert({type:'ticket-orders', ticket:[]});
   }
 
-  function saveTicket(ticket){
-    database.update ({ type:'event-ticket' },{$push: { tickets: ticket } ,}, {});
+  function saveTicket(retval){
+    JSON.stringify(retval);
+;    console.log("värdet: ", retval);
+    //database.update ({id: ticket},{$push: { ticket: tickettNr }, }, {});
+    database.update(
+      { id: ticket}, 
+      { $set: { ticket: ticketNr} },
+      {},// this argument was missing
+      function (err, numReplaced) {
+        console.log("replaced---->" + ticket, ticketNr);
+      }
+      );
+    //database.update ({ type:'event-ticket' },{$push: { tickets: ticket } ,}, {});
    
   }
 

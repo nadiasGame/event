@@ -93,29 +93,26 @@ console.log(resObj);
 app.post('/api/event/buy', (request, response) => {
     const ticket = request.body;
     // Hämta ut beställningen från body
-    console.log(ticket); //Kolla i terminalen för att se hur beställningen ser ut
+    console.log("är det dena vi loggar ", ticket); //Kolla i terminalen för att se hur beställningen ser ut
 
     const resObj = {
         success: true,
-        ticketNr: ''
+        ticket: ''
     
-    }
+    };
 
-
+        const retval = `${ticket.resObj.ticketNr}`;
         //order.id = data.id; // Kopplar samman beställningen med användarnamnet från JWT som skickades med i anropet
-        
-        saveTicket(ticket); // Spara beställningen till databasen
+    
+        saveTicket(retval); // Spara beställningen till databasen
      
 
         resObj.success = true;
         resObj.ticketNr = generateTicketNr();
         resObj.ticketNr = generateETA();
-   
-        
-    
-
+     
     response.json(resObj);
-    console.log(resObj);
+    console.log("är det gamla order", resObj.ticketNr);
     
 });
 

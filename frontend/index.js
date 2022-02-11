@@ -42,7 +42,7 @@ async function ticket(ticket) {
 }
 
 function showEvent (event){
-    console.log(event);
+    console.log("köes denna ",event);
     event.forEach ((eventItem)=>{
         const itemElem = document.createElement('li');
         itemElem.classList.add('event-item');//sätter en css class
@@ -57,6 +57,9 @@ function showEvent (event){
         eventElem.append(itemElem);
 
         itemElem.addEventListener('click',()=>{
+            const ordnr = document.getElementById("order-number").innerHTML;
+            console.log("order numbr ",ordnr);
+            console.log(eventItem.id + " - " + eventItem.title);
             ticket(eventItem.id);
           
         
@@ -106,7 +109,7 @@ async function createAccount(credentials) {
 function saveToken(token) {
     sessionStorage.setItem('token', token);
 }
-
+ 
 async function login(credentials) {
     const response = await fetch('http://localhost:4001/api/staff/login', {
         method: 'POST',
