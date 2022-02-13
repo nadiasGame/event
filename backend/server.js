@@ -1,12 +1,13 @@
+
 const express = require("express");//laddar in express jwt
 const app = express();
 const jwt = require("jsonwebtoken");
 
 
 //hämtsa ifrån databasen
-const {getEvent,saveEvent,saveTicket,getEventById,getAccountByUsername} = require ('./database/operations');
+const {getEvent,saveEvent,saveTicket,getEventById,getAccountByUsername,getTicketNr} = require ('./database/operations');
 const {generateTicketNr} = require ('./utils/ticket');
-const { hashPassword, comparePassword } = require('./utils/bcrypt'); 
+const { hashPassword, comparePassword } = require('./utils/bcrypt');
 const { generateETA } = require('./utils/ticket');
 
 /* const { hashPassword, comparePassword } = require('./utils/bcrypt');  */
@@ -18,6 +19,46 @@ app.use (express.json());
 
 
 // hämta eventet i databasen
+
+app.post('/api/loggedin/verify', async (request, response) => {
+    const ticketNr = request.body;
+    const ticket = await getTicketNr();
+    for(i= 0;i<ticketExists.length;i++){
+        const match=await comparePassword(ticketNr,tickets(i))
+        if (match ==true ){
+            response.json({success:true})
+            return;
+        }
+    }
+    response.json({success:false})
+});
+
+/* try {
+    const data = jwt.verify(token, "a1b1c1");
+    console.log("funkar detta server.js");
+
+  } catch (err) {
+    return;
+  }
+
+    console.log(credentials);
+    //{ username: 'ada', password: 'pwd123' }
+    const resObj = {
+        success: true,
+        ticketExists: false
+    }
+
+    const ticketExists = await getTicketNr(credentials.verify);
+
+    if(length > 0) {
+
+        getTicketNr(credentials);
+    }
+
+    response.json(resObj); */
+
+
+
 app.post('/api/staff/create', async (request, response) => {
     const credentials = request.body;
     //{ username: 'ada', password: 'pwd123' }
@@ -76,7 +117,7 @@ app.get('/api/event', async (_request, response) =>{
     const resObj={
     success: true,
     event: ''
-} 
+}
 const eventEvent = await getEvent();
 
 
@@ -93,27 +134,33 @@ console.log(resObj);
 app.post('/api/event/buy', (request, response) => {
     const ticket = request.body;
     // Hämta ut beställningen från body
-    console.log("är det dena vi loggar ", ticket); //Kolla i terminalen för att se hur beställningen ser ut
+    console.log("är det dena vi loggar ", JSON.stringify(ticket)); //Kolla i terminalen för att se hur beställningen ser ut
 
     const resObj = {
         success: true,
         ticket: ''
-    
+
     };
 
-        const retval = `${ticket.resObj.ticketNr}`;
         //order.id = data.id; // Kopplar samman beställningen med användarnamnet från JWT som skickades med i anropet
-    
-        saveTicket(retval); // Spara beställningen till databasen
-     
+
+       // Spara beställningen till databasen
+
 
         resObj.success = true;
         resObj.ticketNr = generateTicketNr();
         resObj.ticketNr = generateETA();
-     
+
     response.json(resObj);
-    console.log("är det gamla order", resObj.ticketNr);
-    
+    const b = resObj.ticketNr;
+    const retval = `${b}`;
+    const order = ticket;
+    JSON.stringify(retval);
+    JSON.stringify(order);
+      saveTicket(retval,order);
+    console.log("retval: ", retval);
+    console.log("är det order", resObj.ticketNr);
+
 });
 
 

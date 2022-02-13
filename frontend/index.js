@@ -1,44 +1,38 @@
-
-
-
 const eventElem = document.querySelector('#event');
 const orderButton = document.querySelector('#order-button');
 const ticketNumberElem = document.querySelector('#order-number');
 const etaElem = document.querySelector('#eta');
 
-/* const usernameElem = document.querySelector('#username');
-const passwordElem = document.querySelector('#password');
-const createButton = document.querySelector('#create-button');
- */
+
 const usernameLogin = document.querySelector('#username-login');
 const passwordLogin = document.querySelector('#password-login');
 const loginButton = document.querySelector('#login-button');
 
 async function ticket(ticket) {
-  
-   
+
+
    const reqObj={ticket:ticket}
     const response = await fetch('http://localhost:4001/api/event/buy', {
         method: 'POST',
         body: JSON.stringify(reqObj),
         headers: {
-    
+
             'Content-Type': 'application/json'
         }
-       
-   
+
+
     });
-  
+
     const data = await response.json();
     console.log(data);
 
     if (data.success) {
         // Visar ordernummer och leveranstid (ETA);
         ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
-       
+
         /* etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`; */
     }
-    
+
 }
 
 function showEvent (event){
@@ -46,8 +40,8 @@ function showEvent (event){
     event.forEach ((eventItem)=>{
         const itemElem = document.createElement('li');
         itemElem.classList.add('event-item');//sätter en css class
-        itemElem.innerHTML= 
-        `   
+        itemElem.innerHTML=
+        `
             <span class"'${eventItem.id}'">${eventItem.title}</span>
             <div>${eventItem.title}</div>
             <span>${eventItem.time}</span>
@@ -61,17 +55,17 @@ function showEvent (event){
             console.log("order numbr ",ordnr);
             console.log(eventItem.id + " - " + eventItem.title);
             ticket(eventItem.id);
-          
-        
-          
+
+
+
         });
     });
 }
 
 async function getEvent(){
     const response =await fetch ('http://localhost:4001/api/event');
-     
-    
+
+
 
     const data = await response.json();
 
@@ -84,7 +78,7 @@ async function getEvent(){
     }
 }
 
-  
+
 
 
 
@@ -92,8 +86,8 @@ getEvent();
 
 
 
-    
-/* 
+
+/*
 async function createAccount(credentials) {
     const response = await fetch('http://localhost:4001/api/staff/create', {
         method: 'POST',
@@ -109,12 +103,13 @@ async function createAccount(credentials) {
 function saveToken(token) {
     sessionStorage.setItem('token', token);
 }
- 
+
 async function login(credentials) {
     const response = await fetch('http://localhost:4001/api/staff/login', {
         method: 'POST',
         body: JSON.stringify(credentials),
         headers: {
+            
             'Content-Type': 'application/json'
         }
     });
@@ -144,3 +139,5 @@ loginButton.addEventListener('click', () => {
 
     login(credentials);
 });
+
+

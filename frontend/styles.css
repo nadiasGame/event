@@ -48,7 +48,7 @@ body {
   left: 152px;
   overflow: hidden;
 }
-.v7_10 {
+.eventItem.title{
   width: 70px;
   height: 69px;
   background-repeat: no-repeat;
