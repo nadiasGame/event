@@ -20,11 +20,11 @@ app.use (express.json());
 
 // hämta eventet i databasen
 
-app.post('/api/loggedin/verify', async (request, response) => {
+app.post('/api/verify', async (request, response) => {
     const ticketNr = request.body;
-    const ticket = await getTicketNr();
-    for(i= 0;i<ticketExists.length;i++){
-        const match=await comparePassword(ticketNr,tickets(i))
+    const ticket = await ticket;
+    for(i= 0;i < ticketExists.length;i++){
+        const match=await comparePassword(ticketNr,ticket(i))
         if (match ==true ){
             response.json({success:true})
             return;
@@ -33,29 +33,7 @@ app.post('/api/loggedin/verify', async (request, response) => {
     response.json({success:false})
 });
 
-/* try {
-    const data = jwt.verify(token, "a1b1c1");
-    console.log("funkar detta server.js");
 
-  } catch (err) {
-    return;
-  }
-
-    console.log(credentials);
-    //{ username: 'ada', password: 'pwd123' }
-    const resObj = {
-        success: true,
-        ticketExists: false
-    }
-
-    const ticketExists = await getTicketNr(credentials.verify);
-
-    if(length > 0) {
-
-        getTicketNr(credentials);
-    }
-
-    response.json(resObj); */
 
 
 
@@ -84,12 +62,12 @@ app.post('/api/staff/create', async (request, response) => {
     response.json(resObj);
 });
 
-app.post('/api/staff/login', async (request, response) => {
+app.post('/api/loggedin', async (request, response) => {
     const credentials = request.body;
     //{ username: 'ada', password: 'pwd123' }
 
     const resObj = {
-        success: false,
+        success: true,
         token: ''
     }
     const account = await getAccountByUsername(credentials.username);
@@ -133,6 +111,7 @@ console.log(resObj);
 
 app.post('/api/event/buy', (request, response) => {
     const ticket = request.body;
+    
     // Hämta ut beställningen från body
     console.log("är det dena vi loggar ", JSON.stringify(ticket)); //Kolla i terminalen för att se hur beställningen ser ut
 
@@ -149,7 +128,9 @@ app.post('/api/event/buy', (request, response) => {
 
         resObj.success = true;
         resObj.ticketNr = generateTicketNr();
+
         resObj.ticketNr = generateETA();
+        //resObj.event = getEvent();
 
     response.json(resObj);
     const b = resObj.ticketNr;
@@ -160,6 +141,7 @@ app.post('/api/event/buy', (request, response) => {
       saveTicket(retval,order);
     console.log("retval: ", retval);
     console.log("är det order", resObj.ticketNr);
+  
 
 });
 

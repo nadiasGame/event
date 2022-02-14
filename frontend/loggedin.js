@@ -115,32 +115,30 @@ function buyTicket(num) {
 
 
 
-async function verify() {
+/* async function verify() {
   const ticket=inputElem.value
     const token = sessionStorage.getItem('token');
 
     const response = await fetch('http://localhost:4001/api/loggedin/verify', {
         method: 'POST',
         body: JSON.stringify(ticket),
-        headers: {
+        headers:{
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
-        
-    });ß
-    const data = await response.json();
+      const data = await response.json();{
     console.log(data);
-
+  }
     if (data.success) {
         // Visar ordernummer och leveranstid (ETA);
         ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
         etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`;
     }
-}
+};
 buttonElem.addEventListener('click', () => {
 
 verify();
 
-  })
-
+ });
+ */
 //getMenu();

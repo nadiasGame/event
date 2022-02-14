@@ -1,31 +1,3 @@
-function showEvent(event) {
-    console.log("loggar event i show event: ", event);
-      event.forEach((eventItem) => {
-          const itemElem = document.createElement('li');
-          //itemElem.setAttribute('id',${eventItem.id});
-          itemElem.classList.add('event-item');//sätter en css class
-          itemElem.innerHTML =
-          `
-
-              <span>${eventItem.title}</span>
-              <span>${eventItem.time}</span>
-              <span>${eventItem.date}</span>
-              <span>${eventItem.price} kr</span>
-              <span>${eventItem.location}</span>
-
-              `;
-
-            console.log("Vad får vi: ", itemElem);
-          eventElem.append(itemElem);
-
-          itemElem.addEventListener('click',()=>{
-              ticket(eventItem.id);
-
-
-
-            });
-        });
-    }
 
 async function getEvent(){
     const response =await fetch ('http://localhost:4001/api/event');
@@ -45,18 +17,14 @@ getEvent();
 
 
 /*verify tankar 
-
 window.old_print=window.print
 window.print=function() {
    alert('doing things');
    window.old_print();
 } 
-
 ticket left
-
 var q_available = 20;
 var q_sold = 0;
-
 function buyTicket(num) {
  var soldOut = false;
  if (q_sold >= q_available) {
@@ -87,9 +55,6 @@ function buyTicket(num) {
    <option value="4">4</option>
    <option value="5">5</option>
 </select>
-
-
-
 */
 
 
@@ -115,3 +80,4 @@ async function ticketNr(ticketNr) {
        etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`;
    }
 }
+

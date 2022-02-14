@@ -8,6 +8,8 @@ const usernameLogin = document.querySelector('#username-login');
 const passwordLogin = document.querySelector('#password-login');
 const loginButton = document.querySelector('#login-button');
 
+
+
 async function ticket(ticket) {
 
 
@@ -30,33 +32,69 @@ async function ticket(ticket) {
         // Visar ordernummer och leveranstid (ETA);
         ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
 
-        /* etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`; */
+      etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`; 
     }
 
 }
 
 function showEvent (event){
-    console.log("köes denna ",event);
     event.forEach ((eventItem)=>{
         const itemElem = document.createElement('li');
-        itemElem.classList.add('event-item');//sätter en css class
+        itemElem.classList.add('event-item', 'space');//sätter en css class
         itemElem.innerHTML=
+
+
         `
-            <span class"'${eventItem.id}'">${eventItem.title}</span>
-            <div>${eventItem.title}</div>
-            <span>${eventItem.time}</span>
-            <span>${eventItem.price} kr</span>
-            <span>${eventItem.date} </span>
+          
+           
+            <span class="title">${eventItem.title}</span>
+            <span class="location">${eventItem.location}</span>
+            <span class="date">${eventItem.date}</span>
+            <span class="time">${eventItem.time}</span>
+            <span class="price">${eventItem.price} sek</span>
+          
+      
         `;
         eventElem.append(itemElem);
 
         itemElem.addEventListener('click',()=>{
-            const ordnr = document.getElementById("order-number").innerHTML;
-            console.log("order numbr ",ordnr);
-            console.log(eventItem.id + " - " + eventItem.title);
-            ticket(eventItem.id);
+   
+            const ticketElem = document.querySelector('#Ticketverification');
+
+            ticketElem.innerHTML=
 
 
+            `
+            <div class="v2_30">
+            <div class="v2_37"></div>
+            <div class="v10_37"></div>
+            <div class="v2_39"></div>
+            <div class="v2_40"></div>
+            <div class="v4_2"></div>
+            <div class="v2_41"></div>
+            <span class="v2_42">WHAT</span>
+            <span class="v2_43">WHERE</span>
+            <span class="v2_78">FROM</span>
+            <span class="v2_73"></span>
+            <span class="v4_3">Biljetnummer:{ticketNr}</span>
+            <span class="v2_74">${eventItem.title}</span>
+            <span class="v2_75">${eventItem.location}</span>
+            <span class=${eventItem.time}</span>
+            <span class="v4_27">WHEN</span>
+            <span class="v4_28">${eventItem.date}</span>
+            <span class="v3_2">TO</span>
+            <span class="v3_3">${eventItem.time}/span>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div><div class="name">
+    
+            </div>
+            `;
+            ticketElem.append();
+
+        
+            
+            
 
         });
     });
@@ -86,29 +124,15 @@ getEvent();
 
 
 
-
-/*
-async function createAccount(credentials) {
-    const response = await fetch('http://localhost:4001/api/staff/create', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const data = await response.json();
-    console.log(data);
-} */
-
 function saveToken(token) {
-    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('token', token); 
 }
 
 async function login(credentials) {
-    const response = await fetch('http://localhost:4001/api/staff/login', {
+    const response = await fetch('http://localhost:4001/api/loggedin', {
         method: 'POST',
         body: JSON.stringify(credentials),
-        headers: {
+        headers:{
             
             'Content-Type': 'application/json'
         }
@@ -118,19 +142,19 @@ async function login(credentials) {
     if (data.success) {
         // Spara token i sessionStorage
         // Redirecta till http://localhost:5000/loggedIn.html
-        saveToken(data.token);
+        saveToken(data.token); 
         window.location.href = 'http://localhost:4001/loggedin.html';
     }
-};
+}
 
-/*  createButton.addEventListener('click', () => {
+/*   //createButton.addEventListener('click', () => {
     const credentials = {
         username: usernameElem.value,
         password: passwordElem.value
     }
 
     createAccount(credentials);
-}); */
+}); */ 
 loginButton.addEventListener('click', () => {
     const credentials = {
         username: usernameLogin.value,

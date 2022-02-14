@@ -1,8 +1,18 @@
-* {
+ * {
     box-sizing: border-box;
   }
   body {
     font-size: 14px;
+  }
+  .event-item{
+    margin-top:1em;
+    width: 100%;
+  }
+  #event{
+  margin-top: 1em;
+  }
+  .space {
+    padding: 30px;
   }
   .v2_16 {
     width: 375px;
@@ -14,14 +24,13 @@
     left: 0px;
     overflow: hidden;
   }
-  .v6_28 {
+  .date {
     width: 66px;
     height: 66px;
     background: rgba(55,174,171,1);
     opacity: 1;
-    position: absolute;
-    top: 177px;
-    left: 32px;
+margin-top: -27px;
+float: left;
     border: 1px solid rgba(255,255,255,1);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -29,24 +38,24 @@
     border-bottom-right-radius: 3px;
     overflow: hidden;
   }
-  .v4_21 {
-    width: 202px;
+  .location {
+    width: 230px;
     color: rgba(255,255,255,0.800000011920929);
-    position: absolute;
-    top: 200px;
-    left: 122px;
+   
+    float: right;
+    
     font-family: Fira Sans;
     font-weight: Italic;
     font-size: 12px;
     opacity: 1;
-    text-align: left;
+    text-align: right;
   }
-  .v4_25 {
-    width: 202px;
+  .title {
+    width: 230px;
     color: rgba(255,255,255,1);
-    position: absolute;
-    top: 170px;
-    left: 122px;
+ 
+    margin-top: 2px;
+    float: right;
     text-shadow: 1px 1px 0px rgba(0.9607843160629272, 0.41960784792900085, 0.6039215922355652, 1);
     font-family: Fira Sans;
     font-weight: SemiBold;
@@ -54,17 +63,20 @@
     opacity: 1;
     text-align: left;
   }
-  .v5_4 {
-    width: 125px;
+  .time{
+    width: 230px;
     color: rgba(208,208,208,1);
-    position: absolute;
-    top: 221px;
-    left: 122px;
+  float: right;
+   
+
     font-family: Fira Sans;
     font-weight: SemiBold;
     font-size: 14px;
     opacity: 1;
-    text-align: left;
+   
+  }
+  .event-item{
+    margin-top:1em;
   }
   .v6_85 {
     width: 109px;
@@ -78,12 +90,12 @@
     opacity: 1;
     text-align: right;
   }
-  .v6_86 {
+  .price {
+    margin-right:-11em;
+    margin-top: 0em;
     width: 109px;
     color: rgba(55,174,171,1);
-    position: absolute;
-    top: 303px;
-    left: 232px;
+  float: right;
     font-family: Fira Sans;
     font-weight: Bold;
     font-size: 17px;
@@ -114,24 +126,21 @@
     opacity: 1;
     text-align: right;
   }
-  .v5_5 {
-    width: 125px;
+  .location {
+    width: 230px;
     color: rgba(255,255,255,0.800000011920929);
-    position: absolute;
-    top: 291px;
-    left: 122px;
+   
     font-family: Fira Sans;
     font-weight: Italic;
     font-size: 12px;
     opacity: 1;
     text-align: left;
   }
-  .v5_6 {
-    width: 219px;
+  .title {
+    width: 230px;
     color: rgba(255,255,255,1);
-    position: absolute;
-    top: 262px;
-    left: 122px;
+  
+;
     text-shadow: 1px 1px 0px rgba(0.9607843160629272, 0.41960784792900085, 0.6039215922355652, 1);
     font-family: Fira Sans;
     font-weight: SemiBold;
@@ -143,7 +152,7 @@
     width: 125px;
     color: rgba(208,208,208,1);
     position: absolute;
-    top: 312px;
+    top: 230px;
     left: 122px;
     font-family: Fira Sans;
     font-weight: SemiBold;
@@ -151,24 +160,20 @@
     opacity: 1;
     text-align: left;
   }
-  .v5_10 {
-    width: 66px;
+  .location {
+    width: 230px;
     color: rgba(255,255,255,0.800000011920929);
-    position: absolute;
-    top: 384px;
-    left: 122px;
+  
     font-family: Fira Sans;
     font-weight: Italic;
     font-size: 12px;
     opacity: 1;
     text-align: left;
   }
-  .v5_11 {
-    width: 103px;
+  .title {
+    width: 230px;
     color: rgba(255,255,255,1);
-    position: absolute;
-    top: 354px;
-    left: 122px;
+   
     text-shadow: 1px 1px 0px rgba(0.9607843160629272, 0.41960784792900085, 0.6039215922355652, 1);
     font-family: Fira Sans;
     font-weight: SemiBold;
@@ -188,12 +193,10 @@
     opacity: 1;
     text-align: left;
   }
-  .v5_15 {
-    width: 219px;
+  .location {
+    width: 230px;
     color: rgba(255,255,255,0.800000011920929);
-    position: absolute;
-    top: 473px;
-    left: 122px;
+ 
     font-family: Fira Sans;
     font-weight: Italic;
     font-size: 12px;
@@ -318,4 +321,4 @@
   .name {
     color: #fff;
   }
-  
+   
