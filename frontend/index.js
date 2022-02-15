@@ -23,22 +23,22 @@ async function ticket() {
     });
 
     const data = await response.json();
-    console.log(data);
+    console.log("data".data);
 
     if (data.success) {
-        console.log("data ticketnr",data.ticketNr);
-
-        const tiknr = data.ticketNr;
+      
+console.log(data.ticketNr);
+     
         // Visar ordernummer och leveranstid (ETA);
-        //ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
-return tiknr;
+        ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
+
    
     }
 
 }
 
 
-function showEvent (event, ticketkNr){
+function showEvent (event){
     
     event.forEach ((eventItem)=>{
         const itemElem = document.createElement('li');
@@ -61,10 +61,12 @@ function showEvent (event, ticketkNr){
         `;
         eventElem.append(itemElem);
 
-        itemElem.addEventListener('click',async ()=>{
+        itemElem.addEventListener('click', async()=>{
+           const ticketNr = await ticket();
    
-           //const ticket = await ticket();
+         
 
+    
             ticketElem.innerHTML=
 
 
@@ -80,7 +82,7 @@ function showEvent (event, ticketkNr){
             <span class="v2_43">WHERE</span>
             <span class="v2_78">FROM</span>
             <span class="v2_73"></span>
-            <span class="v4_3">Biljetnummer:${ticketNr}</span>
+            <span class="v4_3">Biljetnummer${ticketNr}:</span>
             <span class="v2_74">${eventItem.title}</span>
             <span class="v2_75">${eventItem.location}</span>
             <span class=${eventItem.time}</span>
@@ -95,7 +97,7 @@ function showEvent (event, ticketkNr){
             </div>
             `;
             ticketElem.append();
-            console.log(eventItem.ticketNr);
+        
 
         
             
