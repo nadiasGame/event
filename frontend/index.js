@@ -27,8 +27,7 @@ async function ticket() {
 
     if (data.success) {
       
-console.log(data.ticketNr);
-console.log("data".data);
+
 return data.ticketNr;
         // Visar ordernummer och leveranstid (ETA);
         ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
@@ -99,13 +98,14 @@ function showEvent (event){
             ticketElem.append();
         
 
-   
+        
             
             
 
         });
     });
 }
+
 
 async function getEvent(){
     const response =await fetch ('http://localhost:4001/api/event');

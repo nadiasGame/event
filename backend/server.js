@@ -122,7 +122,7 @@ console.log(resObj);
 
 app.get('/api/event/buy', (request, response) => {
     
-    
+    const ticket=request.body;
    //Kolla i terminalen för att se hur beställningen ser ut
 
     const resObj = {
@@ -131,20 +131,28 @@ app.get('/api/event/buy', (request, response) => {
 
     };
 
-        //order.id = data.id; // Kopplar samman beställningen med användarnamnet från JWT som skickades med i anropet
-
-       // Spara beställningen till databasen
-
 
         resObj.success = true;
         resObj.ticketNr = generateTicketNr();
-
+        
         resObj.genETA = generateETA();
+        response.json(resObj);
 
-        saveTicket(resObj.ticketNr);
-        //resObj.event = getEvent();
+const mergedObjekt={
 
-   response.json(resObj);
+    ...ticket,
+    ...resObj
+
+    
+};
+
+//saveEvent(mergedObjekt);
+console.log(mergedObjekt);
+       
+      
+
+   /* response.json(resObj);
+   saveTicket(resObj.ticketNr); */
    /*const b = resObj.ticketNr;
     const retval = `${b}`;
     const order = ticket;

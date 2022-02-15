@@ -1,6 +1,6 @@
 
 
-const inputElem = document.querySelector('#number');
+const inputElem = document.querySelector('#order-number');
 const buttonElem = document.querySelector('#searchButton');
 
 
