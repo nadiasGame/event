@@ -52,6 +52,7 @@ function showEvent (event){
             <span class="date">${eventItem.date}</span>
             <span class="time">${eventItem.time}</span>
             <span class="price">${eventItem.price} sek</span>
+           
           
       
         `;
@@ -76,14 +77,14 @@ function showEvent (event){
             <span class="v2_43">WHERE</span>
             <span class="v2_78">FROM</span>
             <span class="v2_73"></span>
-            <span class="v4_3">Biljetnummer:{ticketNr}</span>
+            <span class="v4_3">Biljetnummer:</span>
             <span class="v2_74">${eventItem.title}</span>
             <span class="v2_75">${eventItem.location}</span>
             <span class=${eventItem.time}</span>
             <span class="v4_27">WHEN</span>
             <span class="v4_28">${eventItem.date}</span>
             <span class="v3_2">TO</span>
-            <span class="v3_3">${eventItem.time}/span>
+            <span class="v3_3">${eventItem.time}</span>
             <div class="name"></div>
             <div class="name"></div>
             <div class="name"></div><div class="name">
@@ -91,6 +92,7 @@ function showEvent (event){
             </div>
             `;
             ticketElem.append();
+            console.log(eventItem.ticketNr);
 
         
             

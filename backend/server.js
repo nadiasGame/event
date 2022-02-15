@@ -13,6 +13,7 @@ const { generateETA } = require('./utils/ticket');
 /* const { hashPassword, comparePassword } = require('./utils/bcrypt');  */
 
 //createOrderContainer();
+//saveEvent();
 
 app.use (express.static('../frontend'));//kopplar ihop backend med frontend
 app.use (express.json());
@@ -21,18 +22,27 @@ app.use (express.json());
 // hämta eventet i databasen
 
 app.post('/api/verify', async (request, response) => {
-    const ticketNr = request.body;
-    const ticket = await ticket;
-    for(i= 0;i < ticketExists.length;i++){
-        const match=await comparePassword(ticketNr,ticket(i))
-        if (match ==true ){
-            response.json({success:true})
-            return;
-        }
-    }
-    response.json({success:false})
-});
-
+    const ticketNr = String(request.body.ticket); // exempel: {ticket: '1234' } ticket/biljett nummer
+    const tickets = await getTicketNr(); //hämtas från operation.js via databasen. tickets är alla våra tickets i databasen. 
+  
+    console.log(ticketNr, 'ticket-number');
+  
+    for(i = 0; i < tickets.length; i++ ){ 
+  
+      if(tickets[i].ticket!=undefined){
+        const match = await comparePassword(ticketNr, tickets[i].ticket ) 
+      if(match == true){
+        response.json({success: true })
+        return;
+      }
+      }
+      
+     }
+  
+    response.json({success: false })
+        
+  
+  });
 
 
 
