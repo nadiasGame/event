@@ -2,7 +2,7 @@ const eventElem = document.querySelector('#event');
 const orderButton = document.querySelector('#order-button');
 const ticketNumberElem = document.querySelector('#order-number');
 const etaElem = document.querySelector('#eta');
-
+const ticketElem = document.querySelector('#Ticketverification');
 
 const usernameLogin = document.querySelector('#username-login');
 const passwordLogin = document.querySelector('#password-login');
@@ -10,13 +10,10 @@ const loginButton = document.querySelector('#login-button');
 
 
 
-async function ticket(ticket) {
+async function ticket() {
 
-
-   const reqObj={ticket:ticket}
     const response = await fetch('http://localhost:4001/api/event/buy', {
-        method: 'POST',
-        body: JSON.stringify(reqObj),
+        method: 'GET',
         headers: {
 
             'Content-Type': 'application/json'
@@ -29,17 +26,23 @@ async function ticket(ticket) {
     console.log(data);
 
     if (data.success) {
-        // Visar ordernummer och leveranstid (ETA);
-        ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
+        console.log("data ticketnr",data.ticketNr);
 
-      etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`; 
+        const tiknr = data.ticketNr;
+        // Visar ordernummer och leveranstid (ETA);
+        //ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
+return tiknr;
+   
     }
 
 }
 
-function showEvent (event){
+
+function showEvent (event, ticketkNr){
+    
     event.forEach ((eventItem)=>{
         const itemElem = document.createElement('li');
+
         itemElem.classList.add('event-item', 'space');//sätter en css class
         itemElem.innerHTML=
 
@@ -58,9 +61,9 @@ function showEvent (event){
         `;
         eventElem.append(itemElem);
 
-        itemElem.addEventListener('click',()=>{
+        itemElem.addEventListener('click',async ()=>{
    
-            const ticketElem = document.querySelector('#Ticketverification');
+           //const ticket = await ticket();
 
             ticketElem.innerHTML=
 
@@ -77,7 +80,7 @@ function showEvent (event){
             <span class="v2_43">WHERE</span>
             <span class="v2_78">FROM</span>
             <span class="v2_73"></span>
-            <span class="v4_3">Biljetnummer:</span>
+            <span class="v4_3">Biljetnummer:${ticketNr}</span>
             <span class="v2_74">${eventItem.title}</span>
             <span class="v2_75">${eventItem.location}</span>
             <span class=${eventItem.time}</span>

@@ -383,14 +383,18 @@ background-repeat: no-repeat;
   text-align: center;
 }
 .v4_3 {
+ 
+
+
+    margin-top: -100px;
   width: 311px;
   color: rgba(0,0,0,0.4000000059604645);
   position: absolute;
-  top: 504px;
-  left: 12px;
+  top: 550px;
+  left: 50px;
   font-family: Fira Sans;
   font-weight: Bold;
-  font-size: 88px;
+  font-size: 16px;
   opacity: 1;
   text-align: center;
 }

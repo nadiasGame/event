@@ -13,7 +13,7 @@ async function getEvent(){
         console.log(data.event);
     }
 }
-getEvent();
+//getEvent();
 
 
 /*verify tankar 

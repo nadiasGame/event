@@ -119,15 +119,14 @@ response.json(resObj);
 console.log(resObj);
 });
 
-app.post('/api/event/buy', (request, response) => {
-    const ticket = request.body;
+app.get('/api/event/buy', (request, response) => {
     
-    // Hämta ut beställningen från body
-    console.log("är det dena vi loggar ", JSON.stringify(ticket)); //Kolla i terminalen för att se hur beställningen ser ut
+    
+   //Kolla i terminalen för att se hur beställningen ser ut
 
     const resObj = {
         success: true,
-        ticket: ''
+        ticketNr: ''
 
     };
 
@@ -139,18 +138,19 @@ app.post('/api/event/buy', (request, response) => {
         resObj.success = true;
         resObj.ticketNr = generateTicketNr();
 
-        resObj.ticketNr = generateETA();
+        resObj.genETA = generateETA();
+
+        saveTicket(resObj.ticketNr);
         //resObj.event = getEvent();
 
-    response.json(resObj);
-    const b = resObj.ticketNr;
+   response.json(resObj);
+   /*const b = resObj.ticketNr;
     const retval = `${b}`;
     const order = ticket;
     JSON.stringify(retval);
     JSON.stringify(order);
-      saveTicket(retval,order);
-    console.log("retval: ", retval);
-    console.log("är det order", resObj.ticketNr);
+      saveTicket(retval,order); */
+  
   
 
 });

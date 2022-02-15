@@ -89,7 +89,7 @@ const event=
 
 
 
-    const event= await database.find({ });
+    const event= await database.find({ title:{$exists:true}});
     return event;
 
 
@@ -99,39 +99,9 @@ const event=
     database.insert({type:'ticket-orders', ticket:[]});
   }
 
-  function saveTicket(retval,order){
-     const test = retval;
-     const test2 = JSON.stringify(order.ticket);
-
-   console.log("test: ", test + " test2 " + test2);
-    //database.update ({id: ticket},{$push: { ticket: tickettNr }, }, {});
-    // database.update(
-    //   { id: test2},
-    //   { $push: { ticket: [test]} },
-    //   {},// this argument was missing
-    //   function (err, numReplaced) {
-    //     console.log("replaced---->" + test2, test);
-    //   }
-    //   );
-      // database.update(
-      //        { id: test2 },
-      //        { $push: { ticket: test} },
-      //        {},// this argument was missing
-      //        function (err, test) {
-      //          console.log("added---->" + test);
-      //
-      //          database.loadDatabase();
-      //        }
-      //        );
-             database.update({ id: test2}, { $push: { ticket: test } }, {multi:true}, function (err, numReplaced) {
-           // numReplaced = 1
-           // Field 'name' request.name, name now has the value of request.text
-           console.log(numReplaced);
-           //database.loadDatabase();
-           //DB.update({ _id: ID }, { $push: { "activity.Weekly": [0,1,2,4,2,3] } }, {});
-         });
-    //database.update ({ type:'event-ticket' },{$push: { tickets: ticket } ,}, {});
-
+  function saveTicket(ticket){
+     database.insert({ticket:ticket});
+ 
   }
 
 
