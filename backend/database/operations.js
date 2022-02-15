@@ -81,6 +81,7 @@ const event=
 
   function getTicketNr(){
     database.push(ticketNr)
+   
   }
 
  

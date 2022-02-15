@@ -32,6 +32,7 @@ app.post('/api/verify', async (request, response) => {
       if(tickets[i].ticket!=undefined){
         const match = await comparePassword(ticketNr, tickets[i].ticket ) 
       if(match == true){
+          
         response.json({success: true })
         return;
       }

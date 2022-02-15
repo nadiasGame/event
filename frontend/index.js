@@ -23,12 +23,13 @@ async function ticket() {
     });
 
     const data = await response.json();
-    console.log("data".data);
+ 
 
     if (data.success) {
       
 console.log(data.ticketNr);
-     
+console.log("data".data);
+return data.ticketNr;
         // Visar ordernummer och leveranstid (ETA);
         ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
 
@@ -65,7 +66,6 @@ function showEvent (event){
            const ticketNr = await ticket();
    
          
-
     
             ticketElem.innerHTML=
 
@@ -99,7 +99,7 @@ function showEvent (event){
             ticketElem.append();
         
 
-        
+   
             
             
 
