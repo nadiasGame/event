@@ -4,9 +4,7 @@ const ticketNumberElem = document.querySelector('#order-number');
 const etaElem = document.querySelector('#eta');
 const ticketElem = document.querySelector('#Ticketverification');
 
-const usernameLogin = document.querySelector('#username-login');
-const passwordLogin = document.querySelector('#password-login');
-const loginButton = document.querySelector('#login-button');
+
 
 
 
@@ -107,6 +105,8 @@ function showEvent (event){
 }
 
 
+
+
 async function getEvent(){
     const response =await fetch ('http://localhost:4001/api/event');
 
@@ -134,41 +134,5 @@ getEvent();
 function saveToken(token) {
     sessionStorage.setItem('token', token); 
 }
-
-async function login(credentials) {
-    const response = await fetch('http://localhost:4001/api/loggedin', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-        headers:{
-            
-            'Content-Type': 'application/json'
-        }
-    });
-    const data = await response.json();
-    console.log(data);
-    if (data.success) {
-        // Spara token i sessionStorage
-        // Redirecta till http://localhost:5000/loggedIn.html
-        saveToken(data.token); 
-        window.location.href = 'http://localhost:4001/loggedin.html';
-    }
-}
-
-/*   //createButton.addEventListener('click', () => {
-    const credentials = {
-        username: usernameElem.value,
-        password: passwordElem.value
-    }
-
-    createAccount(credentials);
-}); */ 
-loginButton.addEventListener('click', () => {
-    const credentials = {
-        username: usernameLogin.value,
-        password: passwordLogin.value
-    }
-
-    login(credentials);
-});
 
 

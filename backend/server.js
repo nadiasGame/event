@@ -9,6 +9,7 @@ const {getEvent,saveEvent,saveTicket,getEventById,getAccountByUsername,getTicket
 const {generateTicketNr} = require ('./utils/ticket');
 const { hashPassword, comparePassword } = require('./utils/bcrypt');
 const { generateETA } = require('./utils/ticket');
+const { response } = require("express");
 
 /* const { hashPassword, comparePassword } = require('./utils/bcrypt');  */
 
@@ -20,8 +21,30 @@ app.use (express.json());
 
 
 // hämta eventet i databasen
+/* app.get('/api/ticket', async (request, response) => {
+    const ticket = await getTicket();
+    response.json(ticket);
+   }) */
 
-app.post('/api/verify', async (request, response) => {
+app.post('api/auth/Tokencheck',async(request,response)=>{
+    const token=request.headers.authorization.replace('Bearer','');
+    const resObj={
+        success:false
+    }
+    try {
+        const data=jwt.verify(token,'a1b1c1');
+
+        resObj.success=true;
+    }
+    
+    catch(error){
+        resObj.errorMessage='Token invalid';
+    }
+console.log(resObj);
+response.json(resObj);
+})
+
+app.post('/api/loggedin/verify', async (request, response) => {
     const ticketNr = String(request.body.ticket); // exempel: {ticket: '1234' } ticket/biljett nummer
     const tickets = await getTicketNr(); //hämtas från operation.js via databasen. tickets är alla våra tickets i databasen. 
   
@@ -48,43 +71,17 @@ app.post('/api/verify', async (request, response) => {
 
 
 
-app.post('/api/staff/create', async (request, response) => {
+app.post('/api/event/staff', async (request, response) => {
     const credentials = request.body;
     //{ username: 'ada', password: 'pwd123' }
     const resObj = {
-        success: true,
-        usernameExists: false
-    }
-
-    const usernameExists = await getAccountByUsername(credentials.username);
-
-    if(usernameExists.length > 0) {
-        resObj.usernameExists = true;
-        resObj.success = false;
-    }
-
-    if (resObj.usernameExists == false) {
-        const hashedPassword = await hashPassword(credentials.password);
-        credentials.password = hashedPassword;
-
-        saveAccount(credentials);
-    }
-
-    response.json(resObj);
-});
-
-app.post('/api/loggedin', async (request, response) => {
-    const credentials = request.body;
-    //{ username: 'ada', password: 'pwd123' }
-
-    const resObj = {
-        success: true,
+        success: false,
         token: ''
     }
-    const account = await getAccountByUsername(credentials.username);
-    console.log(account);
 
-    if (account.length > 0) {
+    const account = await getAccountByUsername(credentials.username);
+
+    if(account.length > 0) {
         const correctPassword = await comparePassword(credentials.password, account[0].password);
         if (correctPassword) {
             resObj.success = true;
@@ -97,8 +94,11 @@ app.post('/api/loggedin', async (request, response) => {
             resObj.token = token;
         }
     }
+
     response.json(resObj);
 });
+
+
 
 app.get('/api/event', async (_request, response) =>{
 
@@ -142,30 +142,13 @@ const mergedObjekt={
 
     ...ticket,
     ...resObj
-
-    
+   
 };
 
 //saveEvent(mergedObjekt);
 console.log(mergedObjekt);
        
-      
-
-   /* response.json(resObj);
-   saveTicket(resObj.ticketNr); */
-   /*const b = resObj.ticketNr;
-    const retval = `${b}`;
-    const order = ticket;
-    JSON.stringify(retval);
-    JSON.stringify(order);
-      saveTicket(retval,order); */
-  
-  
-
 });
-
-
-
 
 
 app.listen ( 4001 ,()=>{

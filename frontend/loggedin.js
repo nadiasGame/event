@@ -5,34 +5,90 @@ const buttonElem = document.querySelector('#searchButton');
 
 
 // hämta hem server från backend
-async function getEvent() {
+async function loggedIn() {
     const token = sessionStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/event', { //kolla så endpoint är rätt
-        method: 'GET',
+    const response = await fetch('http://localhost:4001/api/auth/Tokencheck', {
+        method: '',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json"
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+
+    if (data.success == false) {
+        verifyElem.style.display = "none";
+        buttonElem.style.display = "none"; 
+        window.location.href = "http://localhost:4001/staff.html"
+
+        
+    }
+
+}
+
+async function getAccountInformation() {
+    const token = sessionStorage.getItem('token');
+    const response = await fetch('http://localhost:4001/api/account', {
         headers: {
             'Authorization': `Bearer ${token}`
         }
-    }); 
-    const data = response.json();
-    console.log(data);
+    });
+    const data = await response.json();
 
+    console.log(data);
+    emailElem.innerHTML = `E-post: ${data.email}`;
+
+    if (data.role == 'admin') {
+        getUserAccounts();
+        showChangePassword();
+    } else if (data.role == 'user') {
+        showRemoveButton();
     }
+}
+
+    /* async function ticketNr(ticketNr) {
+        const token = sessionStorage.getItem('token');
+     
+        const response = await fetch('http://localhost:4001/api/loggedin/verify', {
+            method: 'POST',
+            body: JSON.stringify(order),
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+            
+        });
+        const data = await response.json();
+        console.log(data);
+     
+        if (data.success) {
+            // Visar ordernummer och leveranstid (ETA);
+            ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
+            etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`;
+        }
+     }
+     //hämta hem klickad biljett från databasen
+     */
 
     async function verify(){
+           loggedIn();
         const ticket = inputElem.value;
         const token = sessionStorage.getItem('token');
-        let response = await fetch("/api/verify", {
+        let response = await fetch("api/loggedin/verify", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({
               ticket: ticket,
             }),
+           
           });
-        const data = await response.json();
+        const ticketdata = await response.json();
+        
             console.log(data);
-            if(data.success == true){
+            if(data.success =true){
                 alert('Verified ticket!')
             }
             else{
@@ -40,11 +96,15 @@ async function getEvent() {
             }
     }
 
-    buttonElem.addEventListener('click', () => {
-        verify();
-    });
+
+
+  
+  
+  
+
 
 
   
 
-//getEvent();
+loggedIn();
+getAccountInformation();

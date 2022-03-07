@@ -55,7 +55,7 @@ const event=
 
   async function staff(){
     const pass =await hashPassword('pwd123');
-    const user ={username:'ben' ,password: pass}
+    const user ={username:'nadia' ,password: pass}
 
       database.insert(user)
   }
@@ -104,6 +104,12 @@ const event=
      database.insert({ticket:ticket});
  
   }
+/*   async function createTicket(id){
+    const ticketNumber = Math.floor(Math.random()*10000) // skapa random siffra utan decimaltal
+    const ticket = {ticket: await hashPassword(String(ticketNumber)), eventId: id } // hasha/kryptera lösenordet
+    saveTicket(ticket) // spara i databasen
+    return ticketNumber;  
+ }  */
 
 
   async function getAccountByUsername(username) {
