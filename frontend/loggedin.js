@@ -1,93 +1,70 @@
 
 
-const inputElem = document.querySelector('#order-number');
-const buttonElem = document.querySelector('#searchButton');
+const inputElem = document.querySelector('#verify-ticket');
+const buttonElem = document.querySelector('#verify-button');
 
 
-// hämta hem server från backend
 async function loggedIn() {
     const token = sessionStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/auth/Tokencheck', {
-        method: '',
+    const response = await fetch('http://localhost:4001/api/auth/tokenCheck', {
+        method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
-            "Content-Type": "application/json"
         }
+    
     });
+    console.log(token);
+
+
     const data = await response.json();
-    console.log(data);
+    console.log( 'Vad är detta?(tokenCheck)', data);
 
     if (data.success == false) {
-        verifyElem.style.display = "none";
+        inputElem.style.display = "none";
         buttonElem.style.display = "none"; 
         window.location.href = "http://localhost:4001/staff.html"
 
-        
-    }
-
-}
-
-async function getAccountInformation() {
-    const token = sessionStorage.getItem('token');
-    const response = await fetch('http://localhost:4001/api/account', {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    const data = await response.json();
-
-    console.log(data);
-    emailElem.innerHTML = `E-post: ${data.email}`;
-
-    if (data.role == 'admin') {
-        getUserAccounts();
-        showChangePassword();
-    } else if (data.role == 'user') {
-        showRemoveButton();
     }
 }
 
-    /* async function ticketNr(ticketNr) {
-        const token = sessionStorage.getItem('token');
-     
-        const response = await fetch('http://localhost:4001/api/loggedin/verify', {
-            method: 'POST',
-            body: JSON.stringify(order),
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-            
-        });
-        const data = await response.json();
-        console.log(data);
-     
-        if (data.success) {
-            // Visar ordernummer och leveranstid (ETA);
-            ticketNumberElem.innerHTML = `Ticketnummer: ${data.ticketNr}`;
-            etaElem.innerHTML = `Leveranstid: ${data.eta} minuter`;
+
+async function getTicketNr(){
+    const response = await fetch('http://localhost:4001/api/ticket', {
+                method: 'GET',
+            });
+            const data = await response.json();
+            console.log(data);
+        if (data){
+            checkTicket(data)
         }
-     }
-     //hämta hem klickad biljett från databasen
-     */
+  }
 
     async function verify(){
-           loggedIn();
-        const ticket = inputElem.value;
-        const token = sessionStorage.getItem('token');
-        let response = await fetch("api/loggedin/verify", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              ticket: ticket,
-            }),
+      
+    
+        const ticketVerify = await fetch('http://localhost:4001/api/ticket', {
+            method: 'GET',
+        });
+
+       
            
-          });
-        const ticketdata = await response.json();
+            const ticketData = await ticketVerify.json();
+            console.log(ticketData); 
+
+    const ticket = inputElem.value;
+    let response = await fetch("/api/loggedin/verify", {
+      
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
         
-            console.log(data);
+        body: JSON.stringify({
+            ticket: ticket,
+        }),
+    });
+    const data =await response.json()
+         
             if(data.success =true){
                 alert('Verified ticket!')
             }
@@ -96,15 +73,16 @@ async function getAccountInformation() {
             }
     }
 
-
-
-  
-  
-  
-
-
-
-  
+    buttonElem.addEventListener('click', () =>{
+        verify();
+    });
 
 loggedIn();
-getAccountInformation();
+
+  
+
+
+
+  
+
+

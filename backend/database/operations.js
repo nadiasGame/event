@@ -16,6 +16,8 @@ const event=
         "date":"21 Mars",
         "price":350,
         "ticket":[]
+      //verified:false?
+      
       },
       {
         "id":2,
@@ -80,17 +82,18 @@ const event=
   }
 
   function getTicketNr(){
-    database.push(ticketNr)
-   
-  }
+    let ticket =  database.find({}) //hämtar allt i databasen.
+    console.log('getting tickets');
+    return ticket;
+    
+}
 
- 
 
   async function getEvent() {
 
 
 
-    const event= await database.find({ title:{$exists:true}});
+    const event = database.find({ title:{$exists:true}});
     return event;
 
 
@@ -104,16 +107,17 @@ const event=
      database.insert({ticket:ticket});
  
   }
-/*   async function createTicket(id){
-    const ticketNumber = Math.floor(Math.random()*10000) // skapa random siffra utan decimaltal
-    const ticket = {ticket: await hashPassword(String(ticketNumber)), eventId: id } // hasha/kryptera lösenordet
-    saveTicket(ticket) // spara i databasen
-    return ticketNumber;  
- }  */
+
+  async function checkTicket(ticketNr){
+   const check = await database.find({ ticketNr: ticketNr });
+   return check;
+
+ }
+
 
 
   async function getAccountByUsername(username) {
-    const account = await database.find({ username: username });
+    const account =  database.find({ username: username });
 
 
     return account;
@@ -131,7 +135,7 @@ function saveAccount(account) {
 
 
   module.exports ={
-      getEvent,saveEvent,createTicketContainer,getEventById,saveTicket,getAccountByUsername,saveAccount,staff,getTicketNr,
+    checkTicket, getEvent,saveEvent,createTicketContainer,getEventById,saveTicket,getAccountByUsername,saveAccount,staff,getTicketNr,
   }
 
 

@@ -5,34 +5,6 @@ const loginButton = document.querySelector('#login-button');
 
 
 
-async function getTicket(){
-  const response = await fetch('http://localhost:4001/api/ticket', {
-              method: 'GET',
-          });
-          const data = await response.json();
-          console.log(data);
-      if (data){
-          showTicket(data)
-      }
-}
-
-
-async function createTicket() {  //här gör vi om "event" från rad 16 till "ticket" men det är samma sak.
-  urlId = new URLSearchParams(window.location.search).get("id");
-  const response = await fetch("http://localhost:4001/api/event/buy" + urlId);
-
-
-  const data = await response.json();
-      console.log(data);
-     if (data) {
-         showTicket(data);
-     }
-
-}
-
-
-createTicket();
-
 
 
 async function login(credentials) {
@@ -47,8 +19,7 @@ async function login(credentials) {
   const data = await response.json();
   console.log(data);
   if (data.success) {
-      // Spara token i sessionStorage
-      // Redirecta till http://localhost:5000/loggedIn.html
+     
       saveToken(data.token); 
       window.location.href = 'http://localhost:4001/loggedin.html';
   }

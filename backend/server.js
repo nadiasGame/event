@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 
 //hämtsa ifrån databasen
-const {getEvent,saveEvent,saveTicket,getEventById,getAccountByUsername,getTicketNr} = require ('./database/operations');
+const {checkTicket,getEvent,saveEvent,saveTicket,getEventById,getAccountByUsername,getTicketNr} = require ('./database/operations');
 const {generateTicketNr} = require ('./utils/ticket');
 const { hashPassword, comparePassword } = require('./utils/bcrypt');
 const { generateETA } = require('./utils/ticket');
@@ -20,53 +20,58 @@ app.use (express.static('../frontend'));//kopplar ihop backend med frontend
 app.use (express.json());
 
 
-// hämta eventet i databasen
-/* app.get('/api/ticket', async (request, response) => {
-    const ticket = await getTicket();
-    response.json(ticket);
-   }) */
+app.get('/api/auth/tokenCheck', async (request, response) => {
+    const token = request.headers.authorization.replace('Bearer ', '');
+    const resObj = {
+        success: false,
 
-app.post('api/auth/Tokencheck',async(request,response)=>{
-    const token=request.headers.authorization.replace('Bearer','');
-    const resObj={
-        success:false
     }
+
     try {
-        const data=jwt.verify(token,'a1b1c1');
+        const data = jwt.verify(token, 'a1b1c1'); // Verifera vår token
 
-        resObj.success=true;
+
+        resObj.success = true;
+
+    } catch (error) {
+        resObj.errorMessage = 'Token invalid';
     }
-    
-    catch(error){
-        resObj.errorMessage='Token invalid';
-    }
-console.log(resObj);
-response.json(resObj);
+    console.log(resObj);
+    response.json(resObj);
 })
+
+
 
 app.post('/api/loggedin/verify', async (request, response) => {
     const ticketNr = String(request.body.ticket); // exempel: {ticket: '1234' } ticket/biljett nummer
-    const tickets = await getTicketNr(); //hämtas från operation.js via databasen. tickets är alla våra tickets i databasen. 
+    const tickets =  getTicketNr(); //hämtas från operation.js via databasen. tickets är alla våra tickets i databasen. 
   
     console.log(ticketNr, 'ticket-number');
   
     for(i = 0; i < tickets.length; i++ ){ 
   
-      if(tickets[i].ticket!=undefined){
-        const match = await comparePassword(ticketNr, tickets[i].ticket ) 
-      if(match == true){
-          
-        response.json({success: true })
+           
+        if(tickets[i].verified==true){response.json({success:false,verified:true});
+         return}
+         checkTicket(tickets[i].ticket)
+        response.json({ success: true })
         return;
       }
-      }
-      
-     }
+    
+
   
-    response.json({success: false })
-        
-  
-  });
+
+  response.json({ success: false })
+
+
+});
+app.get('/api/ticket', async (request, response) => {
+    const ticketNr = String(request.body.ticket);
+    const ticket = checkTicket(ticketNr);
+    
+
+    response.json(ticket);
+  })
 
 
 
