@@ -15,8 +15,8 @@ const event=
         "time":"19:00-21:00",
         "date":"21 Mars",
         "price":350,
-        "ticket":[]
-      //verified:false?
+        "ticket":[],
+    
       
       },
       {
@@ -26,7 +26,8 @@ const event=
         "time":"22:00-00:00",
         "date":"29 Mars",
         "price":110,
-        "ticket":[]
+        "ticket":[],
+      
 
       },
       {
@@ -36,7 +37,8 @@ const event=
         "time":"15:00-16:00",
         "date":"10 April",
         "price":99,
-        "ticket":[]
+        "ticket":[],
+      
       },
 
         {
@@ -46,7 +48,8 @@ const event=
         "time":"22:00-du tröttnar",
         "date":"17 April",
         "price":150,
-        "ticket":[]
+        "ticket":[],
+       
 
       }
     ]
@@ -87,6 +90,7 @@ const event=
     return ticket;
     
 }
+//db.files.remove({_id: id}, callback);
 
 
   async function getEvent() {
@@ -104,15 +108,31 @@ const event=
   }
 
   function saveTicket(ticket){
+    console.log(ticket);
      database.insert({ticket:ticket});
  
   }
 
   async function checkTicket(ticketNr){
-   const check = await database.find({ ticketNr: ticketNr });
-   return check;
+    console.log(ticketNr);
+   const check = await database.find({ ticket: ticketNr });
+   console.log(check);
+   
+    if (check.length > 0 ){
+      if (check[0].verified){
+        database.remove({ticket: ticketNr});
+        return"ticket was already verified"
+       }
+       else{
+        database.update ({ ticket: ticketNr },{$set:{verified:true}})
+       return"ticket verified"}
 
- }
+    }
+    return"couldn`t find ticket"
+}
+
+ 
+
 
 
 
@@ -127,8 +147,8 @@ function saveAccount(account) {
   database.insert(account);
 }
 
-
 //staff();
+
 
 
 

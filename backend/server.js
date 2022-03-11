@@ -16,6 +16,7 @@ const { response } = require("express");
 //createOrderContainer();
 //saveEvent();
 
+
 app.use (express.static('../frontend'));//kopplar ihop backend med frontend
 app.use (express.json());
 
@@ -44,30 +45,19 @@ app.get('/api/auth/tokenCheck', async (request, response) => {
 
 app.post('/api/loggedin/verify', async (request, response) => {
     const ticketNr = String(request.body.ticket); // exempel: {ticket: '1234' } ticket/biljett nummer
-    const tickets =  getTicketNr(); //hämtas från operation.js via databasen. tickets är alla våra tickets i databasen. 
+    const tickets = await getTicketNr(); //hämtas från operation.js via databasen. tickets är alla våra tickets i databasen. 
   
     console.log(ticketNr, 'ticket-number');
-  
-    for(i = 0; i < tickets.length; i++ ){ 
-  
-           
-        if(tickets[i].verified==true){response.json({success:false,verified:true});
-         return}
-         checkTicket(tickets[i].ticket)
-        response.json({ success: true })
-        return;
-      }
+                
+       let answere = await checkTicket(ticketNr)
+        console.log(answere);
+        response.json(answere);
     
-
-  
-
-  response.json({ success: false })
-
-
 });
 app.get('/api/ticket', async (request, response) => {
     const ticketNr = String(request.body.ticket);
     const ticket = checkTicket(ticketNr);
+    
     
 
     response.json(ticket);
@@ -138,7 +128,10 @@ app.get('/api/event/buy', (request, response) => {
 
 
         resObj.success = true;
-        resObj.ticketNr = generateTicketNr();
+       const ticketNr= generateTicketNr();
+       resObj.ticketNr=ticketNr;
+       console.log(ticketNr);
+       saveTicket(ticketNr);
         
         resObj.genETA = generateETA();
         response.json(resObj);

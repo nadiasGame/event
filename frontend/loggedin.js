@@ -65,12 +65,8 @@ async function getTicketNr(){
     });
     const data =await response.json()
          
-            if(data.success =true){
-                alert('Verified ticket!')
-            }
-            else{
-                alert('did not match ticket!')
-            }
+            alert(data);
+            
     }
 
     buttonElem.addEventListener('click', () =>{
